@@ -20,6 +20,16 @@ storeRouter.get('/', expressAsyncHandler( async(req, res) =>{
 }))
 
 
+
+//just check if a store name exist when registering a new store
+storeRouter.get('/newstorename', expressAsyncHandler(async (req, res) => {
+    const findNewStoreName = await Mosgandastore.find({ name: { $regex: req.query.newstorename, $options: "i" }, });
+    if (findNewStoreName) {
+        res.json(findNewStoreName)
+    }
+}))
+
+
 //search for stores by name or category
 storeRouter.get('/search', expressAsyncHandler(async (req, res) => {
     const searchStore = await Mosgandastore.find(
@@ -135,19 +145,7 @@ storeRouter.get('/:id', expressAsyncHandler( async(req, res)=>{
     }
 }));
 
-//get store for non user using business name
-// storeRouter.get('/bizname', expressAsyncHandler(async (req, res) => {
-//     const bizname = await Mosgandastore.findOne({ businessName: req.body.name });
-//     if (bizname) {
-//         return res.json({
-//             bizname
-//         })
-//     } else {
-//         res.status(404).json({
-//             message: "Store Not Found"
-//         })
-//     }
-// }))
+
 
 //update a store
 storeRouter.put('/editstore', isAuth, expressAsyncHandler( async(req, res) => {
@@ -166,7 +164,8 @@ storeRouter.put('/editstore', isAuth, expressAsyncHandler( async(req, res) => {
         store.creatorName = req.body.creatorName || store.creatorName,
         store.creatorEmail = req.body.creatorEmail || store.creatorEmail,
         store.creatorPhone = req.body.creatorPhone || store.creatorPhone,
-        store.creatorImage = req.body.creatorImage || store.creatorImage
+        store.creatorImage = req.body.creatorImage || store.creatorImage,
+        store.businessName = req.body.businessName || store.businessName,
         user = req.user._id
     }
     const editedStore = await store.save();

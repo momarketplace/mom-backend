@@ -15,6 +15,7 @@ const messageRouter = require('./routers/messageRouter.js');
 const rejectionRouter = require('./routers/rejectionRouter.js');
 const feedbackRouter = require('./routers/feedbackRouter.js');
 const newsletterRouter = require('./routers/newsletterRouter.js')
+const Mosgandastore = require('./models/storeModel.js');
 
 dotenv.config();
 const app = express();
@@ -32,7 +33,7 @@ mongoose.connect(process.env.CONNECT_TO_DB,{ useNewUrlParser: true, useUnifiedTo
     console.log('connected to db')
 })
 
-//backend address: https://mosganda-backend.herokuapp.com/
+//backend address: https://mosganda-online-market-backend.herokuapp.com/
 
 //express middlewares
 app.use(cors());
@@ -71,6 +72,17 @@ app.get('/api/v1/config/paystack', (req, res) =>{
 
 app.get('/', (req, res)=>{
     res.send("Server is ready");
+})
+
+app.get('/:storename', async (req, res) => {
+
+    const mystore = await Mosgandastore.find({  businessName: { $regex: req.params.storename, $options: "i" } });
+    if (!mystore) {
+        return res.json("Store not found")
+    } else {
+        return res.json(mystore[0])
+    }
+
 })
 
 // app.get('/', expressAsyncHandler(async (req, res) => {
