@@ -32,7 +32,7 @@ messageRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
         //also populate users in a chat
         message = await User.populate(message, {
           path: "chat.users",
-          select: "name email image",
+          select: "name image email",
         });
 
         //findbyId and update the chat with the latest message
