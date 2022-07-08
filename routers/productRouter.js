@@ -184,7 +184,7 @@ productRouter.get(
 
 //get user products for non logged in user
 productRouter.get('/nonuser/:id', expressAsyncHandler(async (req, res) => {
-  const nonuserProducts = await Product.find({ productStoreId: req.params.id, isPaid:false }).sort({ updatedAt: -1 });
+  const nonuserProducts = await Product.find({ productStoreId: req.params.id, isPaid:false, isBlocked:false }).sort({ updatedAt: -1 });
   if (nonuserProducts) {
     res.json(nonuserProducts)
   }
@@ -377,6 +377,26 @@ productRouter.put('/unbanned', isAuth, isAdmin, expressAsyncHandler(async (req, 
     res.json(bannedProduct)
 }))
 
+
+//block a product
+productRouter.put('/block', isAuth, isAdmin, expressAsyncHandler( async(req,res) =>{
+  const product = await Product.findById(req.body.id);
+  if(product){
+      product.isBlocked = true;
+  }
+  const blockedProduct = await product.save();
+      res.json(blockedProduct)
+}))
+
+//unblock a product
+productRouter.put('/unblock', isAuth, isAdmin, expressAsyncHandler( async(req,res) =>{
+  const product = await Product.findById(req.body.id);
+  if(product){
+      product.isBlocked = false;
+  }
+  const unblockedProduct = await product.save();
+      res.json(unblockedProduct)
+}))
 
 
 module.exports = productRouter;

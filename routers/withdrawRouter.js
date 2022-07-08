@@ -14,6 +14,7 @@ withdrawRouter.post('/create', isAuth, expressAsyncHandler( async(req, res) => {
         accountNumber: req.body.accountNumber,
         bank: req.body.bank,
         amount: req.body.amount,
+        deliveryCost: req.body.deliveryCost,
         email: req.body.email,
         phone: req.body.phone,
         productId: req.body.productId,

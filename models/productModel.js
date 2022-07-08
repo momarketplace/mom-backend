@@ -26,6 +26,7 @@ const productSchema = new mongoose.Schema({
     isDeliveredAt:{type:Date},
     isPaidAt: { type: Date },
     isBanned: { type: Boolean, default: false },
+    isBlocked: {type: Boolean, default:false},
     sellerName: {type: String},
     sellerEmail: {type: String},
     sellerId: {type: String},

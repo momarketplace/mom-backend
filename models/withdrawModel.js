@@ -7,6 +7,7 @@ const withdrawSchema = new mongoose.Schema(
     accountNumber: { type: Number, required: true },
     bank: { type: String, required: true },
     amount: { type: Number, required: true },
+    deliveryCost: { type: Number},
     email: { type: String, required: true },
     isPaid: { type: Boolean, default: false },
     isPaidAt: { type: Date},
