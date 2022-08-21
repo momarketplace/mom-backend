@@ -36,20 +36,30 @@ userRouter.post('/register', expressAsyncHandler( async(req, res) => {
 
     const createdUser = await user.save();
     //send verification link to the user's email
-    let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENTID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN
-      }
-    });
+    // let transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     type: 'OAuth2',
+    //     user: process.env.MAIL_USERNAME,
+    //     pass: process.env.MAIL_PASSWORD,
+    //     clientId: process.env.OAUTH_CLIENTID,
+    //     clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    //     refreshToken: process.env.OAUTH_REFRESH_TOKEN
+    //   }
+    // });
+  let transporter = nodemailer.createTransport({
+    name: "www.mosganda.com",
+    host: process.env.CUSTOMIZED_MAIL_HOST,
+    port: 323,
+    secure: false, //use ssl
+    auth: {
+      user: process.env.MAIL_USERNAME,
+      pass: process.env.MAIL_PASSWORD,
+    },
+  })
 
     let mailOptions = {
-      from: "contact@mosganda.com",
+      from: "moses@mosganda.com",
       to: req.body.email,
         subject: 'Account Activation Link',
        html: `  <h1 style="color:#fff; color:green; text-align:center;padding:10px;">Account Verification</h1>
