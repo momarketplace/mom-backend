@@ -67,7 +67,7 @@ app.use('/api/v1/newsletter', newsletterRouter)
 //api for paystack key
 app.get('/api/v1/config/paystack', (req, res) =>{
     // eslint-disable-next-line no-undef
-    res.json(process.env.PAYSTACK_PUBLIC_KEY) //sb stands for sandbox
+    res.json(process.env.MOSGANDA_PAYSTACK_PUBLIC_KEY) //sb stands for sandbox
 })
 
 app.get('/', (req, res)=>{
