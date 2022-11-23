@@ -41,7 +41,7 @@ withdrawRouter.get('/admin', isAuth, isAdmin, expressAsyncHandler(async (req, re
     }
 }))
 
-withdrawRouter.put('/ispaid', expressAsyncHandler( async(req, res) => {
+withdrawRouter.put('/ispaid', isAuth, isAdmin, expressAsyncHandler( async(req, res) => {
   const withs = await Withdraw.findById(req.body.id);
   if(withs) {
     withs.isPaid = true;
